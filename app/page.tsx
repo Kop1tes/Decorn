@@ -2,22 +2,23 @@
 
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
-import { useCart } from "@/context/CartContext";
+import Cart from "@/components/Cart";
 
 export default function Home() {
-  const { cart } = useCart();
-
-  console.log(cart);
-
   return (
     <main>
       <h1>Topper Shop</h1>
 
       {
         products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))
+          <ProductCard
+            key={product.id}
+            product={product}
+          />
+        ))
       }
+      
+     <Cart />
       
     </main>
   );
