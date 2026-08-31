@@ -1,15 +1,14 @@
 'use client';
 
-import { useCart } from "@/context/CartContext";
 import { Product } from "@/types/product";
+import Link from "next/link";
+import AddToCartButton from "./AddToCartButton";
 
 type Props = {
     product: Product;
 };
 
 export default function ProductCard({ product } : Props) {
-    const { addToCart } = useCart();
-
     return (
         <div>
             <img src={product.image} alt={product.title} />
@@ -19,12 +18,9 @@ export default function ProductCard({ product } : Props) {
             <p>Категорiя: {product.category}</p>
             <p>Цiна: {product.price} грн.</p>
 
-            <button
-                onClick={()=> addToCart(product)}
-                className="bg-red-300 text-white p-4 cursor-pointer"
-            >
-                Додати в корзину
-            </button>
+            <Link href={`/products/${product.code}`}>Детальнiше</Link>
+            
+            <AddToCartButton product={product} />
         </div>
     );
 }

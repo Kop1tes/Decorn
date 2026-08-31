@@ -21,6 +21,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const [cart, setCart] = useState<CartItem[]>([]);
 
     function addToCart(product: Product) {
+        
         setCart((prev) => {
             const existing = prev.find(item => item.product.id === product.id);
 
