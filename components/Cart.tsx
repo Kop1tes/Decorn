@@ -1,16 +1,13 @@
 'use client';
 
 import { useCart } from "@/context/CartContext"
+import { calculateCartTotal } from "@/utils/cart";
 import Link from "next/link";
 
 export default function Cart() {
     const { cart, addToCart, removeFromCart } = useCart();
 
-    const total = cart.reduce((total, item) => {
-        total += item.product.price * item.quantity;
-
-        return total;
-    }, 0);
+    const total = calculateCartTotal(cart);
 
     if (cart.length === 0) {
         return (
