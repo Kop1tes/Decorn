@@ -10,7 +10,7 @@ export default function CheckoutPage() {
     const [errorName, setErrorName] = useState<string | null>(null);
     const [errorPhone, setErrorPhone] = useState<string | null>(null);
 
-    const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
@@ -50,6 +50,18 @@ export default function CheckoutPage() {
         };
         
         console.log(order)
+
+        const response = await fetch("/api/orders", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(order),
+        });
+
+        const data = await response.json();
+
+        console.log(data);
     }
 
     
@@ -67,6 +79,7 @@ export default function CheckoutPage() {
                     )}
 
                     <input
+                        className="border border-gray-300 rounded-md px-1 py-1"
                         type="text"
                         name="name"
                         required
@@ -81,6 +94,7 @@ export default function CheckoutPage() {
                     )}
 
                     <input
+                        className="border border-gray-300 rounded-md px-1 py-1"
                         type="tel"
                         name="phone"
                         required
