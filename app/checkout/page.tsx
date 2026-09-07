@@ -7,6 +7,7 @@ import React, { useState } from "react";
 export default function CheckoutPage() {
     const { cart } = useCart();
 
+    const [errorData, setErrorData] = useState<string | null>(null);
     const [errorName, setErrorName] = useState<string | null>(null);
     const [errorPhone, setErrorPhone] = useState<string | null>(null);
 
@@ -15,6 +16,7 @@ export default function CheckoutPage() {
 
         const formData = new FormData(event.currentTarget);
     
+        setErrorData(null);
         setErrorName(null);
         setErrorPhone(null);
 
@@ -61,14 +63,21 @@ export default function CheckoutPage() {
 
         const data = await response.json();
 
+        if (!response.ok) {
+            setErrorData(data.message);
+            return;
+        }
+        
         console.log(data);
     }
-
-    
 
     return (
         <main>
             <h1>Оформлення замовлення</h1>
+
+            {errorData && (
+                <div>{errorData}</div>
+            )}
 
             <form onSubmit={handleSubmit}>
                 <label>
@@ -79,7 +88,7 @@ export default function CheckoutPage() {
                     )}
 
                     <input
-                        className="border border-gray-300 rounded-md px-1 py-1"
+                        className="border border-gray-300 rounded-md w-full px-1 py-1 outline"
                         type="text"
                         name="name"
                         required
@@ -94,7 +103,7 @@ export default function CheckoutPage() {
                     )}
 
                     <input
-                        className="border border-gray-300 rounded-md px-1 py-1"
+                        className="border border-gray-300 rounded-md w-full px-1 py-1 outline"
                         type="tel"
                         name="phone"
                         required
